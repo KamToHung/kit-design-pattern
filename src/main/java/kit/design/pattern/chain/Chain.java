@@ -14,15 +14,15 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class Chain<C extends ChainContext, R> {
-    private List<? extends AbstractHandler<C, R>> handlers;
+public class Chain<C, R> {
+    private List<Handler<C, R>> handlers;
 
-    public Chain(List<? extends AbstractHandler<C, R>> handlers) {
+    public Chain(List<Handler<C, R>> handlers) {
         this.handlers = handlers;
     }
 
     public R execute(C context) {
-        for (AbstractHandler<C, R> handler : handlers) {
+        for (Handler<C, R> handler : handlers) {
             final HandlerResult<R> result = handler.handle(context);
 
             if (!result.isExecuteNextHandlerMark()) {
